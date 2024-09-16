@@ -6,11 +6,12 @@ const Section = {
       const docRef = await db
         .collection('users')
         .doc(userId)
-        .collection('projects') 
+        .collection('projects')
         .doc(projectId)
         .collection('sections')
         .add({
           name: sectionData.name,
+          color: '#ffffffd5', // Cor padrão da seção 
           createdAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
@@ -24,6 +25,23 @@ const Section = {
       return section; 
     } catch (error) {
       console.error('Erro ao criar seção:', error);
+      throw error;
+    }
+  },
+
+  async update(userId, projectId, sectionId, updatedSectionData) {
+    try {
+      await db
+        .collection('users')
+        .doc(userId)
+        .collection('projects')
+        .doc(projectId)
+        .collection('sections')
+        .doc(sectionId)
+        .update(updatedSectionData);
+      return true;
+    } catch (error) {
+      console.error('Erro ao atualizar seção:', error);
       throw error;
     }
   },

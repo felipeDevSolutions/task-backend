@@ -15,6 +15,18 @@ const taskController = {
     }
   },
 
+  async toggleComplete(req, res) {
+    try {
+      const { projectId, sectionId, taskId } = req.params;
+      const userId = req.user.id;
+      await Task.toggleComplete(userId, projectId, sectionId, taskId);
+      res.status(204).send();
+    } catch (error) {
+      console.error('Erro ao alternar o estado da tarefa:', error);
+      res.status(500).json({ message: 'Erro ao alternar o estado da tarefa.' });
+    }
+  },
+
   async getTasks(req, res) {
     try {
       const { projectId, sectionId } = req.params;

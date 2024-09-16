@@ -22,6 +22,34 @@ const sectionController = {
     }
   },
 
+  // Atualiza o nome de uma seção
+  async updateSection(req, res) {
+    try {
+      const { projectId, sectionId } = req.params;
+      const userId = req.user.id;
+  
+      // Criar um objeto com os campos a serem atualizados
+      const updatedData = {};
+      if (req.body.name) {
+        updatedData.name = req.body.name; 
+      }
+      if (req.body.color) {
+        updatedData.color = req.body.color;
+      }
+  
+      // Verifique se há dados para atualizar
+      if (Object.keys(updatedData).length === 0) {
+        return res.status(400).json({ message: 'Nenhum dado para atualizar.' });
+      }
+  
+      await Section.update(userId, projectId, sectionId, updatedData);
+      res.status(200).json({ message: 'Seção atualizada com sucesso!' });
+    } catch (error) {
+      console.error('Erro ao atualizar a seção:', error);
+      res.status(500).json({ message: 'Erro ao atualizar a seção.' });
+    }
+  },
+
   async getSections(req, res) {
     try {
       const projectId = req.params.projectId; 

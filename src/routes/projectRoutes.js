@@ -10,6 +10,9 @@ const taskRoutes = require('./taskRoutes');
 // Cria uma novo projeto
 router.post('/', authenticateToken, projectController.create);
 
+// Atualiza o nome de um projeto
+router.put('/:projectId', authenticateToken, projectController.updateProject);
+
 // Recupera todas os projetos do usuário
 router.get('/', authenticateToken, projectController.getProjects);
 

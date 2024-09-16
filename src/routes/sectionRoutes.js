@@ -5,6 +5,7 @@ const sectionController = require('../controllers/sectionController');
 const authenticateToken = require('../middleware/authMiddleware'); 
 
 router.post('/', authenticateToken, sectionController.create);
+router.put('/:sectionId', authenticateToken, sectionController.updateSection);
 router.get('/', authenticateToken, sectionController.getSections);
 router.delete('/:sectionId', authenticateToken, sectionController.deleteSection);
 

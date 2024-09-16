@@ -16,6 +16,20 @@ const projectController = {
     }
   },
 
+  // Atualiza o nome de um projeto
+  async updateProject(req, res) {
+    try {
+      const projectId = req.params.projectId;
+      const userId = req.user.id;
+      const { project: newName } = req.body; // Obter o novo nome do projeto
+      await Project.update(userId, projectId, { project: newName }); // Atualizar o nome do projeto
+      res.status(200).json({ message: 'Nome do projeto atualizado com sucesso!' }); 
+    } catch (error) {
+      console.error('Erro ao atualizar o projeto:', error);
+      res.status(500).json({ message: 'Erro ao atualizar o projeto.' });
+    }
+  },
+
   // Recupera todas as tarefas do usuário
   async getProjects(req, res) {
     try {

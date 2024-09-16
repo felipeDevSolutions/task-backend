@@ -37,6 +37,32 @@ const Task = {
     }
   },
 
+  async toggleComplete(userId, projectId, sectionId, taskId) {
+    try {
+      const taskRef = db
+        .collection('users')
+        .doc(userId)
+        .collection('projects')
+        .doc(projectId)
+        .collection('sections')
+        .doc(sectionId)
+        .collection('tasks')
+        .doc(taskId);
+  
+      // Obter o estado atual de 'completed'
+      const currentTask = await taskRef.get();
+      const currentCompleted = currentTask.data().completed;
+  
+      // Atualizar 'completed' para o oposto do estado atual
+      await taskRef.update({ completed: !currentCompleted });
+  
+      return true;
+    } catch (error) {
+      console.error('Erro ao alternar o estado da tarefa:', error);
+      throw error;
+    }
+  },
+
   async getBySection(userId, projectId, sectionId) {
     try {
       const tasksRef = db

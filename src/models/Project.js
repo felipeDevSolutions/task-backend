@@ -26,6 +26,21 @@ const Project = {
     }
   },
 
+  async update(userId, projectId, updatedProjectData) {
+    try {
+      await db
+        .collection('users')
+        .doc(userId)
+        .collection('projects')
+        .doc(projectId)
+        .update(updatedProjectData);
+      return true; 
+    } catch (error) {
+      console.error('Erro ao atualizar projeto:', error);
+      throw error;
+    }
+  },
+
   // Recupera todas os projetos de um usuário
   async getByUser(userId) {
     try {

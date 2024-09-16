@@ -7,6 +7,7 @@ const authenticateToken = require('../middleware/authMiddleware');
 router.post('/', authenticateToken, taskController.create);
 router.get('/', authenticateToken, taskController.getTasks);
 router.put('/:taskId', authenticateToken, taskController.updateTask);
+router.put('/:taskId/complete', authenticateToken, taskController.toggleComplete);
 router.delete('/:taskId', authenticateToken, taskController.deleteTask);
 
 module.exports = router;
