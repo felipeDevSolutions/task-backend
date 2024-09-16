@@ -12,4 +12,6 @@ router.put('/:userId/password', authenticateToken, UserController.updatePassword
 // Excluir usuário (Protegida por autenticação)
 router.delete('/:userId', authenticateToken, UserController.deleteUser);
 
+router.get('/me', authenticateToken, UserController.getCurrentUser);
+
 module.exports = router;

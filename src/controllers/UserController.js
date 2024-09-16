@@ -66,6 +66,22 @@ class UserController {
     }
   }
 
+  static async getCurrentUser(req, res) { 
+    try {
+      const userId = req.user.id; // Obtém o ID do usuário do token JWT
+      const user = await User.findById(userId); // Busca o usuário pelo ID
+
+      if (user) {
+        res.status(200).json(user); // Retorna apenas o usuário logado
+      } else {
+        res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuário atual:', error);
+      res.status(500).json({ message: 'Erro ao buscar usuário atual' });
+    }
+  }
+
   static async getUsers(req, res) { 
     try {
       const users = [];
